@@ -1,3 +1,22 @@
+# Subtitle Conversion Tool (Dockerized Fork)
+
+This repository is a Dockerized fork of a subtitle conversion tool. The application is configured to perform weak conversions, adhering strictly to the output format with minimal edits to contents.
+
+## Installation
+
+To build the Docker image, run:
+
+	```sh
+		docker build -t php-subtitles .
+	```
+## Running the Application
+
+To run the application and convert subtitles, use the following command:
+
+	```sh
+		docker run --rm -v $(pwd):/mnt php-subtitles <input-file> <output-file>
+	```
+
 # Caption And Subtitle Converter for PHP
 
 [>> live demo <<](https://gotranscript.com/subtitle-converter)
