@@ -1,6 +1,6 @@
 # Subtitle Conversion Tool (Dockerized Fork)
 
-This repository is a Dockerized fork of a subtitle conversion tool. The application is configured to perform weak conversions, adhering strictly to the output format with minimal edits to contents.
+This repository is a Dockerized fork of a subtitle conversion tool @ https://github.com/mantas-done/subtitles. The application is configured to perform weak conversions, adhering strictly to the output format with minimal edits to contents.
 
 ## Installation
 
