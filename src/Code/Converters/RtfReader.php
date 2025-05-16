@@ -2,19 +2,18 @@
 
 namespace Done\Subtitles\Code\Converters;
 
-use Done\Subtitles\Code\Helpers;
-use Done\Subtitles\Code\UserException;
+use Done\Subtitles\Code\Exceptions\UserException;
 use Done\Subtitles\Subtitles;
 use Jstewmc\Rtf\Document;
 
 class RtfReader implements ConverterContract
 {
-    public function canParseFileContent($file_content, $original_file_content)
+    public function canParseFileContent(string $file_content, string $original_file_content): bool
     {
         return strpos($file_content, '{\rtf1') === 0;
     }
 
-    public function fileContentToInternalFormat($file_content, $original_file_content)
+    public function fileContentToInternalFormat(string $file_content, string $original_file_content): array
     {
         // https://stackoverflow.com/a/63029792/4126621
         $text = preg_replace("/(\{.*\})|}|(\\\\(?!')\S+)/m", '', $original_file_content);
@@ -28,12 +27,13 @@ class RtfReader implements ConverterContract
         unset($line);
         $text = implode("\n", $lines);
 
-        return Subtitles::loadFromString($text)->getInternalFormat();
+        return (new Subtitles())->loadFromString($text)->getInternalFormat();
     }
 
-    public function internalFormatToFileContent(array $internal_format, array $options)
+    /** @throws UserException */
+    public function internalFormatToFileContent(array $internal_format , array $output_settings): string
     {
-        throw new \Exception('not implemented');
+        throw new UserException('RTF writer is not implemented yet');
     }
 
 

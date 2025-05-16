@@ -7,22 +7,22 @@ use Done\Subtitles\Code\Helpers;
 
 class FakeDocxConverter implements ConverterContract
 {
-    public function canParseFileContent($file_content, $original_file_content)
+    public function canParseFileContent(string $file_content, string $original_file_content): bool
     {
         return Helpers::strContains($file_content, 'fake_docx');
     }
 
-    public function fileContentToInternalFormat($file_content, $original_file_content)
+    public function fileContentToInternalFormat(string $file_content, string $original_file_content): array
     {
         return [[
             'start' => 22,
             'end' => 33,
-            'lines' => ['fake'],
+            'lines' => [$original_file_content],
         ]];
     }
 
-    public function internalFormatToFileContent(array $internal_format, array $options)
+    public function internalFormatToFileContent(array $internal_format , array $output_settings): string
     {
-        return 'fake docx text';
+        return $internal_format[0]['lines'][0];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Done\Subtitles\Code\Converters;
 
-use Done\Subtitles\Code\UserException;
+use Done\Subtitles\Code\Exceptions\UserException;
 
 class EbuStlReader implements ConverterContract
 {
-    public function canParseFileContent($file_content, $original_file_content)
+    public function canParseFileContent(string $file_content, string $original_file_content): bool
     {
         return substr($file_content, 3, 3) === 'STL' && is_numeric(substr($file_content, 6, 2));
     }
@@ -17,9 +17,9 @@ class EbuStlReader implements ConverterContract
      * @param string $file_content      Content of file that will be converted
      * @return array                    Internal format
      */
-    public function fileContentToInternalFormat($file_content, $original_file_content)
+    public function fileContentToInternalFormat(string $file_content, string $original_file_content): array
     {
-        $fps = (int)substr($original_file_content, 6, 2);
+        $fps = substr($original_file_content, 6, 2);
         if (!is_numeric($fps)) {
             throw new \Exception('unknown fps: ' . $fps);
         }
@@ -53,15 +53,10 @@ class EbuStlReader implements ConverterContract
         return $internal_format;
     }
 
-    /**
-     * Convert library's "internal format" (array) to file's content
-     *
-     * @param array $internal_format    Internal format
-     * @return string                   Converted file content
-     */
-    public function internalFormatToFileContent(array $internal_format , array $options)
+    /** @throws UserException */
+    public function internalFormatToFileContent(array $internal_format , array $output_settings): string
     {
-        throw new \Exception('not implemented');
+        throw new UserException('EBU STL writer is not implemented yet');
     }
 
     // ------------------------------ private --------------------------------------------------------------------------
