@@ -144,8 +144,15 @@ class Subtitles
                 continue;
             }
 
-            $block['start'] += $seconds;
-            $block['end'] += $seconds;
+            $newStart = $block['start'] + $seconds;
+            $newEnd = $block['end'] + $seconds;
+
+            if ($newStart < 0 || $newStart > 86400 || $newEnd < 0 || $newEnd > 86400) {
+                 throw new \RuntimeException('illegal timecode Reference found at start:' .  $block['start']  . ' end: ' .  $block['end']);
+            }
+
+            $block['start'] = $newStart;
+            $block['end'] = $newEnd;
         }
         unset($block);
 
