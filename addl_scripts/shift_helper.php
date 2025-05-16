@@ -4,8 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Done\Subtitles\Subtitles;
 
-$options = getopt("", ["input:", "shift:", "output:"]);
-if (!isset($options['input'], $options['shift'])) {
+$options = getopt("", ["input:", "shift:", "output:", "scale:", "fps:", "ndf"]);
+if (!isset($options['input'])) {
     echo "Usage: php tcin_shift_simple.php --input=example.srt --shift=2.5\n";
     exit(1);
 }
@@ -33,7 +33,7 @@ $subtitles = new Subtitles();
 $lines = $subtitles->loadFromFile($inputFile);
 
 $lines->shiftTime($shiftSeconds);
-$lines->save($outputPath);
+$lines->save($outputPath,$options);
 
 
 if (file_exists($inputFile)) {
