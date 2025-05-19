@@ -137,9 +137,12 @@ class Subtitles
         return $this;
     }
 
+	/**
+     * @throws UserException
+     */
     public function shiftTime(float $seconds, float $from = 0, ?float $till = null): self
     {
-        foreach ($this->internal_format as &$block) {
+        foreach ($this->internal_format as $index => &$block) {
             if (!Helpers::shouldBlockTimeBeShifted($from, $till, $block['start'], $block['end'])) {
                 continue;
             }
@@ -148,7 +151,7 @@ class Subtitles
             $newEnd = $block['end'] + $seconds;
 
             if ($newStart < 0 || $newStart > 86400 || $newEnd < 0 || $newEnd > 86400) {
-                 throw new \RuntimeException('illegal timecode Reference found at start:' .  $block['start']  . ' end: ' .  $block['end']);
+                throw new \RuntimeException('Subtitle block #' . $index+1 . ' is outside the allowed shifting range @ ' . $block['start'] . ' - ' . $block['end'] . ' seconds');
             }
 
             $block['start'] = $newStart;
